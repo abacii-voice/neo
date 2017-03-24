@@ -6,3 +6,4 @@ pip-selfcheck.json
 *.sqlite3
 migrations/
 woot/static/
+woot/media/
