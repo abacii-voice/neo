@@ -3,3 +3,6 @@ lib/
 include/
 bin/
 pip-selfcheck.json
+*.sqlite3
+migrations/
+woot/static/
