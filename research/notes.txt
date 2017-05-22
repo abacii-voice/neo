@@ -1,0 +1,80 @@
+
+1. Per rdf:about and rdf:resource -> http://stackoverflow.com/questions/7118326/differences-between-rdfresource-rdfabout-and-rdfid
+
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/PATO_0002220">
+	<rdfs:subClassOf rdf:resource="http://www.bioassayontology.org/bao#BAO_0000672"/>
+	<obo:IAO_0000115 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A quality inhering in a protein or a molecule by virtue of the bearer&apos;s having a phosphate (PO4) group.</obo:IAO_0000115>
+	<oboInOwl:created_by rdf:datatype="http://www.w3.org/2001/XMLSchema#string">george</oboInOwl:created_by>
+	<oboInOwl:creation_date rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2010-07-09T01:50:14Z</oboInOwl:creation_date>
+	<oboInOwl:inSubset rdf:resource="http://purl.obolibrary.org/obo/pato#value_slim"/>
+	<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">phosphorylated</rdfs:label>
+</owl:Class>
+
+In RDF: Subject Predicate Object
+In RDF/XML:
+<tag rdf:about=SubjectIRI>
+	<predicate rdf:resource=ObjectIRI>
+
+	... more predicates ...
+
+</tag>
+
+2. Each "object" has an arbitrary amount of two things: Relationships and Properties
+
+<tag rdf:about=SubjectIRI>
+	<predicate rdf:resource=ObjectIRI />
+
+	... more predicates ...
+
+	<property rdf:datatype=TypeIRI>propertyValue</property>
+
+</tag>
+
+3. A blank node is created when an opening tag has no identifier, but does have children, e.g.
+
+<owl:Axiom>
+	<owl:annotatedSource rdf:resource="http://purl.obolibrary.org/obo/CLO_0013124"/>
+	<owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<owl:annotatedTarget rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GM17296</owl:annotatedTarget>
+	<patterns:createdBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://e-lico.eu/populous#OPPL_pattern</patterns:createdBy>
+</owl:Axiom>
+
+Each property of the axiom will have a blank node with an id as its parent. (See rdflib.plugins.parsers.rdfxml.RDFXMLHandler.property_element_end)
+
+4. Have now discovered that the id of the blank node is stored in "self.parent.subject" of "self.current" in property_element_end
+
+5. Is this redundant?
+
+<owl:Class rdf:about="http://purl.obolibrary.org/obo/CLO_0013124">
+		<rdfs:subClassOf rdf:resource="http://www.ebi.ac.uk/efo/EFO_0001640"/>
+		<rdfs:subClassOf rdf:resource="http://www.ebi.ac.uk/efo/EFO_0002888"/>
+		<obo:IAO_0000115 rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HUMAN VARIATION PANEL - CAUCASIAN PANEL OF 200 HUMAN VARIATION PANEL - CAUCASIAN PANEL OF 100 (SET 1)</obo:IAO_0000115>
+		<efo:alternative_term rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GM17296 cell</efo:alternative_term>
+		<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GM17296</rdfs:label>
+</owl:Class>
+<owl:Axiom>
+		<owl:annotatedSource rdf:resource="http://purl.obolibrary.org/obo/CLO_0013124"/>
+		<owl:annotatedProperty rdf:resource="http://purl.obolibrary.org/obo/IAO_0000115"/>
+		<owl:annotatedTarget rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HUMAN VARIATION PANEL - CAUCASIAN PANEL OF 200 HUMAN VARIATION PANEL - CAUCASIAN PANEL OF 100 (SET 1)</owl:annotatedTarget>
+		<patterns:createdBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://e-lico.eu/populous#OPPL_pattern</patterns:createdBy>
+</owl:Axiom>
+<owl:Axiom>
+		<owl:annotatedSource rdf:resource="http://purl.obolibrary.org/obo/CLO_0013124"/>
+		<owl:annotatedProperty rdf:resource="http://www.ebi.ac.uk/efo/alternative_term"/>
+		<owl:annotatedTarget rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GM17296 cell</owl:annotatedTarget>
+		<patterns:createdBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://e-lico.eu/populous#OPPL_pattern</patterns:createdBy>
+</owl:Axiom>
+<owl:Axiom>
+		<owl:annotatedSource rdf:resource="http://purl.obolibrary.org/obo/CLO_0013124"/>
+		<owl:annotatedProperty rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+		<owl:annotatedTarget rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GM17296</owl:annotatedTarget>
+		<patterns:createdBy rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://e-lico.eu/populous#OPPL_pattern</patterns:createdBy>
+</owl:Axiom>
+
+They are not redundant. Each axiom in this example adds "patterns:createdBy" to the Class.
+
+6. Django filtering
+
+Can use __icontains, __istartswith, and __iendswith for case insensitivity
+Can use regex: Entry.objects.get(title__regex=r'^(An?|The) +')
+

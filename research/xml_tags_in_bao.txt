@@ -1,0 +1,47 @@
+{
+  "rdf": [
+    "RDF",
+    "Description"
+  ],
+  "owl": [
+    "Ontology",
+    "versionInfo",
+    "AnnotationProperty",
+    "Class",
+    "equivalentClass"
+  ],
+  "rdfs": [
+    "label",
+    "comment",
+    "subClassOf"
+  ],
+  "dc": [
+    "date",
+    "license",
+    "relation",
+    "source"
+  ],
+  "obo": [
+    "IAO_0000111",
+    "IAO_0000114",
+    "IAO_0000115",
+    "IAO_0000117",
+    "IAO_0000119",
+    "IAO_0000116",
+    "IAO_0000425",
+    "IAO_0000118"
+  ],
+  "oboInOwl": [
+    "hasDbXref",
+    "is_class_level",
+    "is_metadata_tag",
+    "shorthand",
+    "hasExactSynonym",
+    "created_by",
+    "creation_date",
+    "inSubset"
+  ],
+  "kuspo": [
+    "KUSPO_00000021"
+  ]
+}

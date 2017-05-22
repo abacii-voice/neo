@@ -7,3 +7,4 @@ pip-selfcheck.json
 migrations/
 woot/static/
 woot/media/
+__pycache__
